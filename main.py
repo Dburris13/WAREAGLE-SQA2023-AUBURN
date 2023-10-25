@@ -6,6 +6,7 @@ Source Code to Run Tool on All Kubernetes Manifests
 import scanner 
 import pandas as pd 
 import constants
+import typer
 
 def getCountFromAnalysis(ls_):
     list2ret           = []
