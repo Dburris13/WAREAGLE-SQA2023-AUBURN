@@ -18,4 +18,10 @@ Members:
     Created fuzz.py with 5 functions that break 5 other functions. Not sure how detailed / advanced he wants us to get with these
     Added Github Action to fun fuzz.py following tutorial here: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 
+    Removed packages from requirements.txt that don't work
+        Bottleneck==1.3.5        
+        mkl-fft==1.3.6
+        mkl-random==1.2.2
+        mkl-service==2.4.0
+
 
