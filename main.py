@@ -7,6 +7,8 @@ import scanner
 import pandas as pd 
 import constants
 import typer
+import myLogger
+from pathlib import Path
 
 def getCountFromAnalysis(ls_):
     list2ret           = []
@@ -49,17 +51,30 @@ def getCountFromAnalysis(ls_):
 
 def main(directory: Path = typer.Argument(..., exists=True, help="Absolute path to the folder than contains Kubernetes manifests"),
          ):
+#def main():
     """
     Run KubeSec in a Kubernetes directory and get results in a CSV file.
 
     """
+    # Code taken from Workshop2 KubeSec ZIP because this main function doesn't work
+    #directory         = '/WAREAGLE-SQA2023-AUBURN/TEST_ARTIFACTS/'
+    outfile           = '/WAREAGLE-SQA2023-AUBURN/WAREAGLE-SQA2023-AUBURN-OUTPUT.csv'
+
+    # Simple logging statements just saying which directory this was run on and where the output file lives. 
+    simpleLogger.info("Directory: ")
+    simpleLogger.info(directory)
+    simpleLogger.info("Output File: " + outfile)
+
     content_as_ls, sarif_json   = scanner.runScanner( directory )
+    simpleLogger.info("Content as LS: " + content_as_ls)
+    simpleLogger.info("SARIF JSON: " + sarif_json)
     
     with open("SLIKUBE.sarif", "w") as f:
       f.write(sarif_json)
 
     df_all          = pd.DataFrame( getCountFromAnalysis( content_as_ls ) )
-    outfile = Path(directory, "slikube_results.csv")
+    #outfile = Path(directory, "slikube_results.csv")
+    simpleLogger.info("Dataframe ALL: " + df_all.to_string())
 
     df_all.to_csv( outfile, header= constants.CSV_HEADER , index=False, encoding= constants.CSV_ENCODING )
 
@@ -80,7 +95,14 @@ if __name__ == '__main__':
     # OUTPUT_FILE_CSV = '/Users/arahman/Documents/OneDriveWingUp/OneDrive-TennesseeTechUniversity/Research/Kubernetes/StaticTaint/data/V16_BRINTO_OUTPUT.csv'
 
     # take sarif_json from scanner
-    main()
+    
+    # Creating the logger object from myLogger.py
+    simpleLogger  = myLogger.createLoggerObj()
+
+    simpleLogger.info("Start of Log File")    
+    main('/WAREAGLE-SQA2023-AUBURN/TEST_ARTIFACTS')
+    
+    simpleLogger.info("End of Log File")
 
 
 
