@@ -1,3 +1,4 @@
+
 # WAREAGLE-SQA2023-AUBURN
 ## COMP6710 Group Project. 
 ### Members: 
@@ -62,4 +63,58 @@ jobs:
         - name: Run fuzz.py
         run: |
             python fuzz.py
+```
+
+4. Tried to build and run docker image from Dockerfile found in KubeSec.zip, but kept running into the following issues.
+   ```
+   cd C:\Users\Daniel\OneDrive - Auburn University\Documents\COMP6710\Project\WAREAGLE-SQA2023-AUBURN
+   docker build -t docker_project .
+   docker run --rm -it dab/docker_project
+   ```
+5. So I opened the docker image we had from Workshop2 to try and get this code to run and I kept running into the following issue. I will message Dr. Rahman about these issues I'm running into
+```
+   Traceback (most recent call last):
+  File "/WAREAGLE-SQA2023-AUBURN/main.py", line 103, in <module>
+    main('/WAREAGLE-SQA2023-AUBURN/TEST_ARTIFACTS')
+  File "/WAREAGLE-SQA2023-AUBURN/main.py", line 68, in main
+    content_as_ls, sarif_json   = scanner.runScanner( directory )
+  File "/WAREAGLE-SQA2023-AUBURN/scanner.py", line 681, in runScanner
+    rollingUpdateDict     = scanForRollingUpdates( yml_ )
+  File "/WAREAGLE-SQA2023-AUBURN/scanner.py", line 487, in scanForRollingUpdates
+    line_number = parser.show_line_for_paths(path_script,constants.SPEC_KW)
+  File "/WAREAGLE-SQA2023-AUBURN/parser.py", line 349, in show_line_for_paths
+    result = subprocess.check_output(["yq", yq_parameter , filepath], universal_newlines=True)
+  File "/usr/lib/python3.10/subprocess.py", line 421, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+  File "/usr/lib/python3.10/subprocess.py", line 503, in run
+    with Popen(*popenargs, **kwargs) as process:
+  File "/usr/lib/python3.10/subprocess.py", line 971, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.10/subprocess.py", line 1863, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'yq'
+```
+   
+6. Anyway I went ahead and added myLogger.py from workshop 8 to the project and just put in a couple of logging functions in main.py. Haven't done much else with it yet. 
+- (underneath if \_\_name\_\_ == '\_\_main\_\_':)
+```    
+    # Creating the logger object from myLogger.py
+    simpleLogger  = myLogger.createLoggerObj()
+
+    simpleLogger.info("Start of Log File")    
+    main('/WAREAGLE-SQA2023-AUBURN/TEST_ARTIFACTS')
+    
+    simpleLogger.info("End of Log File")
+```
+
+- Underneath main() function: 
+``` 
+    # Simple logging statements just saying which directory this was run on and where the output file lives. 
+    simpleLogger.info("Directory: ")
+    simpleLogger.info(directory)
+    simpleLogger.info("Output File: " + outfile)
+
+    content_as_ls, sarif_json   = scanner.runScanner( directory )
+    simpleLogger.info("Content as LS: " + content_as_ls)
+    simpleLogger.info("SARIF JSON: " + sarif_json)
 ```
