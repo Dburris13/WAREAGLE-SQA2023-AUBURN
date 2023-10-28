@@ -68,9 +68,49 @@ jobs:
 4. Tried to build and run docker image from Dockerfile found in KubeSec.zip, but kept running into the following issues.
    ```
    cd C:\Users\Daniel\OneDrive - Auburn University\Documents\COMP6710\Project\WAREAGLE-SQA2023-AUBURN
-   docker build -t docker_project .
-   docker run --rm -it dab/docker_project
+   docker build -t docker_project .   
    ```
+
+```
+PS C:\Users\Daniel\OneDrive - Auburn University\Documents\COMP6710\Project\KubeSec\KubeSec-master> docker build .
+[+] Building 405.3s (9/11)                                                                               docker:default
+ => [internal] load build definition from Dockerfile                                                               0.1s
+ => => transferring dockerfile: 545B                                                                               0.0s
+ => [internal] load .dockerignore                                                                                  0.1s
+ => => transferring context: 2B                                                                                    0.0s
+ => [internal] load metadata for docker.io/continuumio/miniconda3:latest                                           0.6s
+ => [1/7] FROM docker.io/continuumio/miniconda3@sha256:db9f536d96d49fe21b5f4ac3252781bb0d2a3b58dab2d8e44343b85014  0.0s
+ => [internal] load build context                                                                                  0.1s
+ => => transferring context: 91.64kB                                                                               0.0s
+ => CACHED [2/7] WORKDIR /app                                                                                      0.0s
+ => CACHED [3/7] RUN conda config --append channels conda-forge                                                    0.0s
+ => CACHED [4/7] COPY environment.yml .                                                                            0.0s
+ => ERROR [5/7] RUN conda env create -v -f environment.yml                                                       404.4s
+------
+ > [5/7] RUN conda env create -v -f environment.yml:
+1.299 Collecting package metadata (repodata.json): ...working... done
+316.5 Solving environment: ...working... done
+392.5
+392.5 CondaError: Downloaded bytes did not match Content-Length
+392.5   url: https://repo.anaconda.com/pkgs/main/linux-64/mkl-2023.1.0-h213fc3f_46343.conda
+392.5   target_path: /opt/conda/pkgs/mkl-2023.1.0-h213fc3f_46343.conda
+392.5   Content-Length: 179885653
+392.5   downloaded bytes: 109517169
+392.5
+392.5
+------
+Dockerfile:9
+--------------------
+   7 |     # Create the environment:
+   8 |     COPY environment.yml .
+   9 | >>> RUN conda env create -v -f environment.yml
+  10 |
+  11 |     # Make RUN commands use the new environment:
+--------------------
+ERROR: failed to solve: process "/bin/sh -c conda env create -v -f environment.yml" did not complete successfully: exit code: 1
+PS C:\Users\Daniel\OneDrive - Auburn University\Documents\COMP6710\Project\KubeSec\KubeSec-master>
+```
+   
 5. So I opened the docker image we had from Workshop2 to try and get this code to run and I kept running into the following issue. I will message Dr. Rahman about these issues I'm running into
 ```
    Traceback (most recent call last):
