@@ -25,7 +25,7 @@ if  __name__=='__main__':
 	fuzzGetYAMLFiles()
 	fuzzGetValidTaints()
 ```
-3. Added Github Action to fun fuzz.py following tutorial here: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+3. Added Github Action to run fuzz.py by following tutorial here: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 ```
 # This workflow will install Python dependencies, run tests and lint with a single version of Python
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python  
@@ -158,3 +158,4 @@ FileNotFoundError: [Errno 2] No such file or directory: 'yq'
     simpleLogger.info("Content as LS: " + content_as_ls)
     simpleLogger.info("SARIF JSON: " + sarif_json)
 ```
+7. Added folder to store the Ansible/Puppet files for individual task to github and finished the invididual task. It seems pretty simple you just setup a docker image with all libraries needed to run vault4paper.py then spend an hour or so just walking through all the Ansible/Puppet files and replacing them with the outputs from vault4paper.py. Since it's individual I didn't push my results to this repo, but I did include quick MD document just detailing the steps I did to get it working.
