@@ -929,12 +929,13 @@ def scanForHTTP( path2script ):
                     sh_files_configmaps[http_count] =  val_ 
 
                     line_number = parser.show_line_for_paths(path2script, http_key)
-                    for line in line_number:
-                            # print(line)
-                            result= Result(rule_id='SLIKUBE_10',rule_index= 9,level='error', attachments= [], message=Message(text="Use of HTTP without TLS"),)
-                            location = Location(physical_location=PhysicalLocation(artifact_location=ArtifactLocation(uri=path2script),region = Region(start_line =line)))
-                            result.locations = [location] 
-                            run.results.append(result)
+                    if line_number is not None:
+                        for line in line_number:
+                                # print(line)
+                                result= Result(rule_id='SLIKUBE_10',rule_index= 9,level='error', attachments= [], message=Message(text="Use of HTTP without TLS"),)
+                                location = Location(physical_location=PhysicalLocation(artifact_location=ArtifactLocation(uri=path2script),region = Region(start_line =line)))
+                                result.locations = [location] 
+                                run.results.append(result)
                             
                 elif( parser.checkIfValidHelm( path2script ) ):
                     '''
@@ -946,12 +947,13 @@ def scanForHTTP( path2script ):
                     infected_list = graphtaint.mineViolationGraph(path2script, yaml_d, val_, key_) 
                     sh_files_configmaps[http_count] = infected_list
                     line_number = parser.show_line_for_paths(path2script, http_key)
-                    for line in line_number:
-                            #print(line)
-                            result= Result(rule_id='SLIKUBE_10',rule_index= 9,level='error', attachments= [], message=Message(text="Use of HTTP without TLS"),)
-                            location = Location(physical_location=PhysicalLocation(artifact_location=ArtifactLocation(uri=path2script),region = Region(start_line =line)))
-                            result.locations = [location] 
-                            run.results.append(result)
+                    if line_number is not None:                    
+                        for line in line_number:
+                                #print(line)
+                                result= Result(rule_id='SLIKUBE_10',rule_index= 9,level='error', attachments= [], message=Message(text="Use of HTTP without TLS"),)
+                                location = Location(physical_location=PhysicalLocation(artifact_location=ArtifactLocation(uri=path2script),region = Region(start_line =line)))
+                                result.locations = [location] 
+                                run.results.append(result)
                     
                 else: 
                     '''
@@ -964,12 +966,13 @@ def scanForHTTP( path2script ):
                         infected_list = graphtaint.getTaintsFromConfigMaps( path2script  ) 
                         sh_files_configmaps[http_count] = infected_list
                         line_number = parser.show_line_for_paths(path2script, http_key)
-                        for line in line_number:
-                            #print(line)
-                            result= Result(rule_id='SLIKUBE_10',rule_index= 9,level='error', attachments= [], message=Message(text="Use of HTTP without TLS"),)
-                            location = Location(physical_location=PhysicalLocation(artifact_location=ArtifactLocation(uri=path2script),region = Region(start_line =line)))
-                            result.locations = [location] 
-                            run.results.append(result)
+                        if line_number is not None:                    
+                            for line in line_number:
+                                #print(line)
+                                result= Result(rule_id='SLIKUBE_10',rule_index= 9,level='error', attachments= [], message=Message(text="Use of HTTP without TLS"),)
+                                location = Location(physical_location=PhysicalLocation(artifact_location=ArtifactLocation(uri=path2script),region = Region(start_line =line)))
+                                result.locations = [location] 
+                                run.results.append(result)
                          
     
     # print(sh_files_configmaps) 
@@ -996,11 +999,12 @@ def scanForUnconfinedSeccomp(path_script ):
                 # print( relevant_values )
                 if constants.UNCONFIED_KW in relevant_values:
                     line_number = parser.show_line_for_paths(path_script,constants.UNCONFIED_KW)
-                    for line in line_number:
-                        result= Result(rule_id='SLIKUBE_UNLISTED_05',rule_index= 4, level='error',attachments = [] ,message=Message(text=" Use of unconfined seccomp profile"))
-                        location = Location(physical_location=PhysicalLocation(artifact_location=ArtifactLocation(uri=path_script),region = Region(start_line =line)))
-                        result.locations = [location]
-                        run.results.append(result)
+                    if line_number is not None:
+                        for line in line_number:
+                            result= Result(rule_id='SLIKUBE_UNLISTED_05',rule_index= 4, level='error',attachments = [] ,message=Message(text=" Use of unconfined seccomp profile"))
+                            location = Location(physical_location=PhysicalLocation(artifact_location=ArtifactLocation(uri=path_script),region = Region(start_line =line)))
+                            result.locations = [location]
+                            run.results.append(result)
                     dic[cnt] = [] 
     return dic  
 

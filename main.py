@@ -58,23 +58,20 @@ def main(directory: Path = typer.Argument(..., exists=True, help="Absolute path 
     """
     # Code taken from Workshop2 KubeSec ZIP because this main function doesn't work
     #directory         = '/WAREAGLE-SQA2023-AUBURN/TEST_ARTIFACTS/'
-    outfile           = '/WAREAGLE-SQA2023-AUBURN/WAREAGLE-SQA2023-AUBURN-OUTPUT.csv'
+    outfile           = '/WAREAGLE-SQA2023-AUBURN/WAREAGLE-OUTPUT.csv'
 
     # Simple logging statements just saying which directory this was run on and where the output file lives. 
-    simpleLogger.info("Directory: ")
-    simpleLogger.info(directory)
-    simpleLogger.info("Output File: " + outfile)
+    simpleLogger.info("Directory to be scanned: " + directory)
+    simpleLogger.info("Results file located here: " + outfile)
 
     content_as_ls, sarif_json   = scanner.runScanner( directory )
-    simpleLogger.info("Content as LS: " + content_as_ls)
-    simpleLogger.info("SARIF JSON: " + sarif_json)
     
     with open("SLIKUBE.sarif", "w") as f:
       f.write(sarif_json)
 
     df_all          = pd.DataFrame( getCountFromAnalysis( content_as_ls ) )
     #outfile = Path(directory, "slikube_results.csv")
-    simpleLogger.info("Dataframe ALL: " + df_all.to_string())
+    simpleLogger.info("List of all YAML files parsed: " + df_all.to_string())
 
     df_all.to_csv( outfile, header= constants.CSV_HEADER , index=False, encoding= constants.CSV_ENCODING )
 
@@ -99,8 +96,8 @@ if __name__ == '__main__':
     # Creating the logger object from myLogger.py
     simpleLogger  = myLogger.createLoggerObj()
 
-    simpleLogger.info("Start of Log File")    
-    main('/WAREAGLE-SQA2023-AUBURN/TEST_ARTIFACTS')
+    simpleLogger.info("Start of Log File")
+    main('/WAREAGLE-SQA2023-AUBURN/TEST_ARTIFACTS/')
     
     simpleLogger.info("End of Log File")
 
