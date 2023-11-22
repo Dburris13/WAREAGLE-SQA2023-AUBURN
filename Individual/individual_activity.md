@@ -6,9 +6,9 @@
 	  - `docker run --rm -it project-docker`
   - Inside docker image ran the following:
   	  - `apt update`
-          - `apt upgrade` 
+     - `apt upgrade`         
 	  - `apt install curl`
-    	  - `apt install git`
+    -  `apt install git`    	 
 	  - `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 	  - `brew tap hashicorp/tap`
 	  - `brew install hashicorp/tap/vault`
