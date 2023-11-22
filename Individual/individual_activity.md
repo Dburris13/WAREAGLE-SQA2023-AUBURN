@@ -5,7 +5,10 @@
   - Start docker session in CLI mode
 	  - `docker run --rm -it project-docker`
   - Inside docker image ran the following:
-	  - `apt-get install curl`
+  	  - `apt update`
+          - `apt upgrade` 
+	  - `apt install curl`
+    	  - `apt install git`
 	  - `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 	  - `brew tap hashicorp/tap`
 	  - `brew install hashicorp/tap/vault`
