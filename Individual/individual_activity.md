@@ -17,10 +17,11 @@
 	  - Start vault server
 		  - `vault server -dev`
   - Back in first terminal:
-	  - Changed  vault4papyer.py hvac_url to 'http://127.0.0.1:8200'
-	  - Changed vault4papyer.py hvac_token to token given by `vault server -dev` 
-	  - Ran vault4paper.py
-	  - `python3 vault4paper.py`
+    - Changed  vault4papyer.py hvac_url to 'http://127.0.0.1:8200'
+    - Changed vault4papyer.py hvac_token to token given by `vault server -dev`
+    - Install hvac library `python3 -m pip install hvac`
+    - Ran vault4paper.py
+    - `python3 vault4paper.py`
   - Walked through all the Ansible and Puppet files and replaced anything with secret, password, or user in the field name. 
 
   
