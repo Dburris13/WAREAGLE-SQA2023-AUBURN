@@ -13,6 +13,8 @@ import json
 from sarif_om import *
 from jschema_to_python.to_json import to_json
 
+from myLogger import myLogObj
+
 '''Global SarifLog Object definition and Rule definition for SLI-KUBE. Rule IDs are ordered by the sequence as it appears in the TOSEM paper'''
 
 sarif_log = SarifLog(version='2.1.0',schema_uri='https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json', runs =[])
@@ -194,6 +196,12 @@ def scanForOverPrivileges(script_path):
         parser.getKeyRecursively(yaml_dict, key_lis) 
         # print('KEY LIST ALL-------------------------------------')
         # print(key_lis)
+    
+        # I want to log the keys read for each YAML file
+        # The reason this is in scanForOverPrivileges and not in getKeyRecursively is 
+        # because I simply want it logged once, not for every different scan of the same file
+        myLogObj.info(f"Key list for file {script_path}: {key_lis}")
+
         '''
         if you are using `parser.getKeyRecursively` to get all keys , you need to do some trnasformation to get the key names 
         as the output is a list of tuples so, `[(k1, v1), (k2, v2), (k3, v3)]`
@@ -730,7 +738,10 @@ def runScanner(dir2scan):
                 invalid_yaml.append(yml_)
         else:
             print(" Weird YAML --> ",yml_)
+            # Log the files we aren't parsing because they are in ./github/workflows/ 
+            myLogObj.info(f"Invalid K8S YAML File {yml_}")
             weird_yaml.append(yml_)
+
 
         sarif_json = to_json(sarif_log)
         #print(sarif_json)       

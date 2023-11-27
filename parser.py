@@ -15,6 +15,8 @@ import re
 import subprocess
 import os
 
+from myLogger import myLogObj
+
 #update basepath
 base_path = r" "
 
@@ -72,7 +74,7 @@ def getKeyRecursively(  dict_, list2hold,  depth_ = 0  ) :
                             getKeyRecursively( listItem, list2hold,  depth_ )     
             else: 
                 list2hold.append( (key_, depth_) ) 
-    #print(list2hold)               
+    #print(list2hold)
 
 def getValuesRecursively(  dict_   ) :
     '''
@@ -102,9 +104,14 @@ def checkIfValidK8SYaml(path2yaml):
     key_lis      = list( getValuesRecursively  ( yaml_dict ) )
     if ( any(x_ in key_lis for x_ in constants.K8S_FORBIDDEN_KW_LIST ) ): 
         val2ret = False 
+        
+        # If any YAML files aren't scanned because they arn't valid I want it logged
+        myLogObj.info(f"Invalid K8S YAML File {path2yaml}")
     else: 
         if ( constants.API_V_KEYNAME in temp_ ) and (constants.KIND_KEY_NAME in temp_):
             val2ret = True 
+
+    
     return val2ret
 
 
