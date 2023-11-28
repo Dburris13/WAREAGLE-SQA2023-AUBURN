@@ -1,0 +1,11 @@
+# Called by "git commit" with no arguments.  The hook should
+# exit with non-zero status after issuing an appropriate message if
+# it wants to stop the commit.
+#
+# To enable this hook, rename this file to "pre-commit".
+
+# Using the bandit tool to analyze all python files
+# I want the verbose output so I know it's doing something
+echo  "Running bandit security analysis on all python files"
+python3  -m  bandit  -v  -a  vuln  -r  -f  csv  -o  security_weaknesses  .
+exit  0
