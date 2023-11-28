@@ -6,6 +6,8 @@
 * Nan Yang
 * Krystal Lin
 
+Link to Report Rough Draft: https://tigermailauburn-my.sharepoint.com/:w:/g/personal/dab0103_auburn_edu/EewzwlfkhbNIqEY8vUeKrIgBPPZcwjESGOLX1Yi5hkJeDA?e=gcfUd8
+
 ### Initial Stuff I've done:
 
 1. Added pre-commit to .git/hooks with the following lines:
