@@ -155,12 +155,15 @@ def checkParseError( path_script ):
                 pass
         except ruamel.yaml.parser.ParserError as parse_error:
             flag = False
-            print(constants.YAML_SKIPPING_TEXT)           
+            myLogObj.info(f"Tried to parse file {path_script}, but ran into exception {parse_error}")
+            print(constants.YAML_SKIPPING_TEXT) 
         except ruamel.yaml.error.YAMLError as exc:
             flag = False
+            myLogObj.info(f"Tried to parse file {path_script}, but ran into exception {exc}")
             print( constants.YAML_SKIPPING_TEXT  )    
         except UnicodeDecodeError as err_: 
             flag = False
+            myLogObj.info(f"Tried to parse file {path_script}, but ran into exception {err_}")
             print( constants.YAML_SKIPPING_TEXT  )
     return flag
 
@@ -175,10 +178,13 @@ def loadMultiYAML( script_ ):
                 # print(d_)
                 dicts2ret.append( d_ )
         except ruamel.yaml.parser.ParserError as parse_error:
+            myLogObj.info(f"Tried to load file {script_}, but ran into exception {parse_error}")
             print(constants.YAML_SKIPPING_TEXT)           
         except ruamel.yaml.error.YAMLError as exc:
+            myLogObj.info(f"Tried to load file {script_}, but ran into exception {exc}")
             print( constants.YAML_SKIPPING_TEXT  )    
         except UnicodeDecodeError as err_: 
+            myLogObj.info(f"Tried to load file {script_}, but ran into exception {err_}")
             print( constants.YAML_SKIPPING_TEXT  )
         
         path = find_json_path_keys(dicts2ret)
@@ -330,6 +336,7 @@ def show_line_for_paths(  filepath, key): #key_jsonpath_mapping is a global dict
     try:
         print("This is the mapping for the Key",key,"--->",key_jsonpath_mapping[key]) 
     except:
+        myLogObj.info(f"Tried to get mapping for key {key}, but couldn't find it in key_jsonpath_mapping")
         return
     # for k in key_jsonpath_mapping:
     #     print("Key--->",k, "Value--->",key_jsonpath_mapping[k])
